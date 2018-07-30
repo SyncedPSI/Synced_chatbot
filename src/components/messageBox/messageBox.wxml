@@ -1,6 +1,14 @@
-<view class="messageBox">
-    <view class="inputBox">
-        <input type="text" confirm-type="send" placeholder="和我心聊一聊吧！" bindinput="handleInput" placeholder-class="input_placeholder" cursor-spacing="18" bindconfirm="sendMessage"/>
-        <button type="default" bindtap="sendMessage" class="sendMsg {{enableSendMessage ? 'enable' : ''}}" confirm-type="send"></button>
+<view class="message-box">
+  <view class="message-box__bottom">
+    <scroll-view class="recommend-word__container" scroll-x style="width: 100%">
+      <view class="recommend-word__item" wx:for="{{recommendWord}}" bindtap="sendRecommendWord">
+        <text class="recommend-word__inline">{{item}}</text>
+      </view>
+    </scroll-view>
+    <view class="input-box">
+      <button type="default" class="input-box__btn input-box__voice" confirm-type="send"></button>
+      <input class="input-box__input" type="text" confirm-type="send" placeholder="和我心聊一聊吧！" bindinput="handleInput" placeholder-class="input_placeholder" cursor-spacing="18" bindconfirm="sendMessage"/>
+      <button type="default" bindtap="sendMessage" class="input-box__btn input-box__send {{enableSendMessage ? 'enable' : ''}}" confirm-type="send"></button>
     </view>
+  </view>
 </view>
