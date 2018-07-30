@@ -31,7 +31,7 @@
     </scroll-view>
     <view class="input-box">
       <button type="default" class="input-box__btn input-box__voice" confirm-type="send"></button>
-      <input class="input-box__input" type="text" confirm-type="send" placeholder="和我心聊一聊吧！" bindinput="handleInput" placeholder-class="input_placeholder" cursor-spacing="18" bindconfirm="sendMessage"/>
+      <input class="input-box__input" type="text" confirm-type="send" value="{{message}}" placeholder="和我心聊一聊吧！" bindinput="handleInput" placeholder-class="input_placeholder" cursor-spacing="18" bindconfirm="confirmSend"/>
       <button type="default" bindtap="sendMessage" class="input-box__btn input-box__send {{enableSendMessage ? 'enable' : ''}}" confirm-type="send"></button>
     </view>
   </view>
