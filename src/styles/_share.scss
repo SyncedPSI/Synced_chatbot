@@ -1,5 +1,7 @@
 
 @import 'mixins';
+$gray: #F6F6F6;
+$black: #282828;
 
 %clearfix {
 	@include clearfix();
