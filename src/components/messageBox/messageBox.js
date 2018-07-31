@@ -24,7 +24,7 @@ Component({
     fetchData: function (keyword) {
       request('https://tgenieapi-beta.dui.ai/dialog', {
         query: {
-          resources: ['914001237'],
+          resources: ['914001237', '914001354'],
           text: keyword,
           type: 'text'
         },
@@ -33,7 +33,7 @@ Component({
         },
       }, 'POST').then(res => {
         console.log(res.data);
-        const { reply } = res.data.result;
+        const { reply, askBack } = res.data.result;
         const { chat } = this.data;
         if (reply === undefined) return;
 
@@ -54,6 +54,10 @@ Component({
               data: Items
             },
           })
+        }
+
+        if (askBack && askBack.items.length > 0) {
+
         }
 
         this.setData({
@@ -99,25 +103,24 @@ Component({
       this.fetchData(keyword);
     },
     pageScrollToBottom: function() {
-      const that = this;
       this.getContentHeight((rect) => {
         const { height, bottom } = rect;
 
-        if (that.enableChangePadding) {
-          let newPaddingtop = that.getWillSrollViewPaddingTop(height);
+        if (this.enableChangePadding) {
+          let newPaddingtop = this.getWillSrollViewPaddingTop(height);
           if (newPaddingtop === -1) {
-            that.setData({
+            this.setData({
               scrollTop: bottom
             });
           } else {
-            that.setData({
+            this.setData({
               scrollViewPaddingTop: newPaddingtop,
               scrollTop: bottom + newPaddingtop
             });
           }
 
         } else {
-          that.setData({
+          this.setData({
             scrollTop: height - this.scrollViewHeight + 28
           });
         }
@@ -127,9 +130,8 @@ Component({
       if (!this.enableChangePadding) return;
 
       this.keyboardHeight = event.detail.height;
-      const that = this;
-      that.getContentHeight((rect) => {
-        const newPaddingtop = that.getWillSrollViewPaddingTop(rect.height);
+      this.getContentHeight((rect) => {
+        const newPaddingtop = this.getWillSrollViewPaddingTop(rect.height);
         if (newPaddingtop !== -1) {
           this.setData({
             scrollViewPaddingTop: newPaddingtop
