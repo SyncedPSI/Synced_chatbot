@@ -56,6 +56,8 @@ Component({
       })
     },
     sendMessage: function () {
+      if (!this.data.enableSendMessage) return;
+
       const { chat, message } = this.data;
       chat.push({
         id: Math.random() * 100000000,
@@ -66,7 +68,8 @@ Component({
 
       this.setData({
         chat,
-        message: ''
+        message: '',
+        inputFocus: true,
       }, () => {
         this.pageScrollToBottom();
       });

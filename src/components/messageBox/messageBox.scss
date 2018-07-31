@@ -1,13 +1,17 @@
 @import 'share';
 $bottom-height: 188rpx;
 
+page {
+  height: 100%;
+}
+
 .message__flex {
   display: flex;
   align-items: center;
 }
 
 .message-box {
-  height: calc(100vh - 188rpx);
+  height: 100%;
   background-color: $gray;
   box-sizing: border-box;
 
@@ -67,6 +71,8 @@ $bottom-height: 188rpx;
 
   &__content {
     padding: 24rpx;
+    font-size: 30rpx;
+    line-height: 48rpx;
     box-shadow: 0 4rpx 8rpx 0 rgba(226, 225, 225, 0.50);
   }
 
