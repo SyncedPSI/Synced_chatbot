@@ -18,3 +18,25 @@ export function formatTime(date) {
 		[hour, minute, second].map(formatNumber).join(':')
 	);
 }
+
+export const request = (url, data = {}, method = "GET") => {
+  return new Promise(function (resolve, reject) {
+    wx.request({
+      url: url,
+      data: {
+        ...data,
+      },
+      method: method,
+      header: {
+        'Content-Type': 'application/json',
+        'token': wx.getStorageSync('token')
+      },
+      success: function (res) {
+        resolve(res);
+      },
+      fail: function (err) {
+        reject(err);
+      }
+    })
+  });
+};
