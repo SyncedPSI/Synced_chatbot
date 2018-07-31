@@ -2,7 +2,7 @@
 <import src="./search.wxml"/>
 
 <view class="message-box">
-  <scroll-view class="message-box__body" scroll-y style="height: 100%;" scroll-top="{{scrollTop}}">
+  <scroll-view class="message-box__body" id="js-scroll-view" scroll-y style="height: 100%; padding-top: {{scrollViewPaddingTop}}px;" scroll-top="{{scrollTop}}">
     <view id="js-content">
       <view class="message-box__item" wx:for="{{chat}}" wx:key="{{item.id}}">
         <view class="message-box__inline t-left" wx:if="{{item.fromLocal}}">
@@ -35,7 +35,7 @@
   </scroll-view>
   <view class="input-box">
     <button type="default" class="input-box__btn input-box__voice" confirm-type="send"></button>
-    <input class="input-box__input" type="text" confirm-type="send" confirm-hold value="{{message}}" placeholder="和我心聊一聊吧！" bindinput="handleInput" placeholder-class="input_placeholder" cursor-spacing="18" bindconfirm="sendMessage"/>
+    <input class="input-box__input" type="text" confirm-type="send" bindfocus="inputFocus" bindblur="inputBlur" confirm-hold value="{{message}}" placeholder="和我心聊一聊吧！" bindinput="handleInput" placeholder-class="input_placeholder" cursor-spacing="18" bindconfirm="sendMessage"/>
     <button type="default" bindtap="sendMessage" class="input-box__btn input-box__send {{enableSendMessage ? 'enable' : ''}}" confirm-type="send"></button>
   </view>
 </view>

@@ -8,10 +8,17 @@ Component({
       fromLocal: true,
       messageType: 1,
       message: '欢迎你加入机器之心人工智能信息服务平台',
-      scrollTop: 0
     }],
+    scrollTop: 0,
+    scrollViewPaddingTop: 0,
     recommendWord: ['语音助手可以做什么', '它有哪些应用案例', '同类公司', '尝试发送推荐'],
     enableSendMessage: false,
+  },
+  ready: function() {
+    this.enableChangePadding = true;
+    wx.createSelectorQuery().in(this).select('#js-scroll-view').boundingClientRect((rect) => {
+      this.scrollViewHeight = rect.bottom;
+    }).exec()
   },
   methods: {
     fetchData: function (keyword) {
@@ -25,6 +32,7 @@ Component({
           session: 'dadwadasdawdad'
         },
       }, 'POST').then(res => {
+        console.log(res.data);
         const { reply } = res.data.result;
         const { chat } = this.data;
         if (reply === undefined) return;
@@ -76,7 +84,6 @@ Component({
       });
       this.fetchData(message)
     },
-
     handleInput: function (event) {
       const newMessage = event.detail.value;
       this.setData({
@@ -84,21 +91,72 @@ Component({
         enableSendMessage: this.checkIfEnableSendMessage(newMessage)
       });
     },
-
     checkIfEnableSendMessage: function (newMessage) {
       return !!(newMessage.length > 0);
     },
-
     sendRecommendWord: function (event) {
       const keyword = event.target.dataset.value;
       this.fetchData(keyword);
     },
     pageScrollToBottom: function() {
-      wx.createSelectorQuery().in(this).select('#js-content').boundingClientRect((rect) => {
-        this.setData({
-          scrollTop: rect.bottom
-        })
-      }).exec()
+      const that = this;
+      this.getContentHeight((rect) => {
+        const { height, bottom } = rect;
+
+        if (that.enableChangePadding) {
+          let newPaddingtop = that.getWillSrollViewPaddingTop(height);
+          if (newPaddingtop === -1) {
+            that.setData({
+              scrollTop: bottom
+            });
+          } else {
+            that.setData({
+              scrollViewPaddingTop: newPaddingtop,
+              scrollTop: bottom + newPaddingtop
+            });
+          }
+
+        } else {
+          that.setData({
+            scrollTop: height - this.scrollViewHeight + 28
+          });
+        }
+      });
+    },
+    inputFocus: function(event) {
+      if (!this.enableChangePadding) return;
+
+      this.keyboardHeight = event.detail.height;
+      const that = this;
+      that.getContentHeight((rect) => {
+        const newPaddingtop = that.getWillSrollViewPaddingTop(rect.height);
+        if (newPaddingtop !== -1) {
+          this.setData({
+            scrollViewPaddingTop: newPaddingtop
+          })
+        }
+      });
+    },
+    inputBlur: function() {
+      this.setData({
+        scrollViewPaddingTop: 0
+      });
+    },
+    getContentHeight: function(cb) {
+      wx.createSelectorQuery().in(this).select('#js-content').boundingClientRect(cb).exec()
+    },
+    getWillSrollViewPaddingTop: function(contentHeight) {
+      const { scrollViewPaddingTop } = this.data;
+      let newValue = -1;
+      if ((this.scrollViewHeight - this.keyboardHeight) > contentHeight) {
+        newValue = this.keyboardHeight;
+      } else if (this.scrollViewHeight > contentHeight) {
+        newValue = this.scrollViewHeight - contentHeight;
+      } else if (scrollViewPaddingTop > 0) {
+        newValue = 0;
+        this.enableChangePadding = false;
+      }
+      return newValue;
     }
   },
 });
