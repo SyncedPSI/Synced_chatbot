@@ -178,6 +178,10 @@ page {
     background-position: center;
     background-repeat: no-repeat;
 
+    &::after {
+      border: none;
+    }
+
     &.enable {
       background-color: $black;
     }
