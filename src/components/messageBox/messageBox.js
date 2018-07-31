@@ -8,6 +8,7 @@ Component({
       fromLocal: true,
       messageType: 1,
       message: '欢迎你加入机器之心人工智能信息服务平台',
+      scrollTop: 0
     }],
     recommendWord: ['语音助手可以做什么', '它有哪些应用案例', '同类公司', '尝试发送推荐'],
     enableSendMessage: false,
@@ -60,7 +61,7 @@ Component({
         id: Math.random() * 100000000,
         fromLocal: false,
         messageType: 1,
-        message: keyword,
+        message,
       });
 
       this.setData({
@@ -90,7 +91,7 @@ Component({
     },
     pageScrollToBottom: function() {
       wx.createSelectorQuery().in(this).select('#js-content').boundingClientRect((rect) => {
-        wx.pageScrollTo({
+        this.setData({
           scrollTop: rect.bottom
         })
       }).exec()

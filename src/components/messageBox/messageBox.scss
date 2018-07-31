@@ -7,7 +7,7 @@ $bottom-height: 188rpx;
 }
 
 .message-box {
-  height: 100vh;
+  height: calc(100vh - 188rpx);
   background-color: $gray;
   box-sizing: border-box;
 
