@@ -4,18 +4,18 @@
 <view class="message-box {{isIphoneX ? 'is-iphonex' : ''}}">
   <scroll-view class="message-box__body" id="js-scroll-view" scroll-y style="height: 100%; padding-top: {{scrollViewPaddingTop}}px;" scroll-top="{{scrollTop}}">
     <view id="js-content">
-      <view class="message-box__item" wx:for="{{chat}}" wx:key="{{item.id}}">
+      <view class="message-box__item" wx:for="{{chat}}">
         <view class="message-box__inline t-left" wx:if="{{item.fromLocal}}">
           <view class="message-box__avatar">
             <image class="message-box__image" src="/images/logo_avatar.png" mode="aspectFill"></image>
           </view>
-          <view class="message-box__content">
-            <view wx:if="{{item.messageType === 1}}">{{item.message}}</view>
-            <view wx:elif="{{item.messageType === 2}}">
-              <template is="node" data="{{...item.message}}" />
+          <view>
+            <view class="message-box__content">{{item.message}}</view>
+            <view class="message-box__content" wx:if="{{item.node !== null}}">
+              <template is="node" data="{{...item.node}}" />
             </view>
-            <view wx:elif="{{item.messageType === 3}}">
-              <template is="search" data="{{...item.message}}" />
+            <view class="message-box__content" wx:if="{{item.askBack.items.length !== 0}}">
+              <template is="search" data="{{...item.askBack}}" />
             </view>
           </view>
         </view>

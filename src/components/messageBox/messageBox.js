@@ -3,10 +3,13 @@ Component({
   data: {
     message: '',
     chat: [{
-      id: 1,
       fromLocal: true,
-      messageType: 1,
       message: '欢迎你加入机器之心人工智能信息服务平台',
+      askBack: {
+        items: [],
+        path: '',
+      },
+      node: null,
     }],
     scrollTop: 0,
     scrollViewPaddingTop: 0,
@@ -37,24 +40,16 @@ Component({
         const { chat } = this.data;
         if (reply === undefined) return;
 
-        const { CardType, node_label, Title, Items } = reply;
-        if (CardType === 1) {
-          chat.push({
-            id: node_label,
-            fromLocal: true,
-            messageType: 1,
-            message: Title,
-          });
-        } else if (CardType === 2) {
-          chat.push({
-            id: Math.random() * 100000,
-            fromLocal: true,
-            messageType: 3,
-            message: {
-              data: Items
-            },
-          })
-        }
+        const { CardType, node_label, Title, Items, path } = reply;
+        chat.push({
+          fromLocal: true,
+          message: Title,
+          askBack: {
+            items: Items || [],
+            path,
+          },
+          node: null,
+        });
 
         if (askBack && askBack.items.length > 0) {
 
