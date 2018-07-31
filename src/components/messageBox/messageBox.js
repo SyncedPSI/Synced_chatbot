@@ -13,23 +13,7 @@ Component({
     enableSendMessage: false,
   },
   methods: {
-    confirmSend: function(event) {
-      const keyword = event.detail.value;
-      this.sendMessage(keyword);
-    },
-    sendMessage: function (keyword = this.data.message) {
-      const { chat } = this.data;
-      chat.push({
-        id: Math.random() * 100000000,
-        fromLocal: false,
-        messageType: 1,
-        message: keyword,
-      });
-
-      this.setData({
-        chat,
-        message: ''
-      });
+    fetchData: function (keyword) {
       request('https://tgenieapi-beta.dui.ai/dialog', {
         query: {
           resources: ['914001237'],
@@ -63,14 +47,29 @@ Component({
           })
         }
 
-        this.setChat(chat);
+        this.setData({
+          chat
+        }, () => {
+          this.pageScrollToBottom();
+        });
       })
     },
-
-    setChat: function(chat) {
-      this.setData({
-        chat
+    sendMessage: function () {
+      const { chat, message } = this.data;
+      chat.push({
+        id: Math.random() * 100000000,
+        fromLocal: false,
+        messageType: 1,
+        message: keyword,
       });
+
+      this.setData({
+        chat,
+        message: ''
+      }, () => {
+        this.pageScrollToBottom();
+      });
+      this.fetchData(message)
     },
 
     handleInput: function (event) {
@@ -84,8 +83,17 @@ Component({
       return !!(this.data.message.length > 0);
     },
 
-    sendRecommendWord: function () {
+    sendRecommendWord: function (event) {
+      const keyword = event.target.dataset.value;
+      this.fetchData(keyword);
     },
+    pageScrollToBottom: function() {
+      wx.createSelectorQuery().in(this).select('#js-content').boundingClientRect((rect) => {
+        wx.pageScrollTo({
+          scrollTop: rect.bottom
+        })
+      }).exec()
+    }
   },
 });
 
