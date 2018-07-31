@@ -69,6 +69,7 @@ Component({
       this.setData({
         chat,
         message: '',
+        enableSendMessage: false,
         inputFocus: true,
       }, () => {
         this.pageScrollToBottom();
