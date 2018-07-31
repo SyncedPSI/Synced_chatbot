@@ -73,14 +73,15 @@ Component({
     },
 
     handleInput: function (event) {
+      const newMessage = event.detail.value;
       this.setData({
-        message: event.detail.value,
-        enableSendMessage: this.checkIfEnableSendMessage()
+        message: newMessage,
+        enableSendMessage: this.checkIfEnableSendMessage(newMessage)
       });
     },
 
-    checkIfEnableSendMessage: function () {
-      return !!(this.data.message.length > 0);
+    checkIfEnableSendMessage: function (newMessage) {
+      return !!(newMessage.length > 0);
     },
 
     sendRecommendWord: function (event) {
