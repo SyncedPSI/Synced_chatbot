@@ -13,7 +13,7 @@ Component({
     }],
     scrollTop: 0,
     scrollViewPaddingTop: 0,
-    recommendWord: ['语音助手可以做什么', '它有哪些应用案例', '同类公司', '尝试发送推荐'],
+    recommend: ['机器之心', '应用案例', '猜你喜欢', '人工智能', '推荐文章'],
     enableSendMessage: false,
     isIphoneX: getApp().globalData.isIphoneX
   },
@@ -36,11 +36,12 @@ Component({
         },
       }, 'POST').then(res => {
         console.log(res.data);
-        const { reply, askBack } = res.data.result;
+        const { reply, askBack, recommend } = res.data.result;
         const { chat } = this.data;
         if (reply === undefined) return;
 
         const { CardType, node_label, Title, Items, path } = reply;
+
         chat.push({
           fromLocal: true,
           message: Title,
@@ -56,7 +57,8 @@ Component({
         }
 
         this.setData({
-          chat
+          chat,
+          recommend: recommend.items.map(item => item.question),
         }, () => {
           this.pageScrollToBottom();
         });

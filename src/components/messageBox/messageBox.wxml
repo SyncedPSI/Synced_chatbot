@@ -4,7 +4,7 @@
 <view class="message-box {{isIphoneX ? 'is-iphonex' : ''}}">
   <scroll-view class="message-box__body" id="js-scroll-view" scroll-y style="height: 100%; padding-top: {{scrollViewPaddingTop}}px;" scroll-top="{{scrollTop}}">
     <view id="js-content">
-      <view class="message-box__item" wx:for="{{chat}}">
+      <view class="message-box__item" wx:for="{{chat}}" wx:key="{{index}}">
         <view class="message-box__inline t-left" wx:if="{{item.fromLocal}}">
           <view class="message-box__avatar">
             <image class="message-box__image" src="/images/logo_avatar.png" mode="aspectFill"></image>
@@ -31,7 +31,7 @@
 
 <view class="message-box__bottom {{isIphoneX ? 'is-iphonex' : ''}}">
   <scroll-view class="recommend-word__container" scroll-x style="width: 100%">
-    <view class="recommend-word__item" wx:for="{{recommendWord}}" wx:key="recommend-word-{{index}}">
+    <view class="recommend-word__item" wx:for="{{recommend}}" wx:key="recommend-word-{{index}}">
       <text class="recommend-word__inline" bindtap="sendRecommendWord" data-value="{{item}}">{{item}}</text>
     </view>
   </scroll-view>
