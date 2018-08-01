@@ -1,5 +1,6 @@
 @import 'share';
 $bottom-height: 188rpx;
+$iphonex-safe-padding: 68rpx;
 
 page {
   height: 100%;
@@ -13,8 +14,16 @@ page {
 .message-box {
   height: 100%;
   padding-bottom: $bottom-height;
-  background-color: $gray;
+  background-color: #fff;
   box-sizing: border-box;
+
+  &.is-iphonex {
+    padding-bottom: $bottom-height + $iphonex-safe-padding;
+  }
+
+  &__body {
+    background-color: $gray;
+  }
 
   &__item {
     padding: 0 40rpx;
@@ -81,6 +90,10 @@ page {
     bottom: 0;
     box-sizing: border-box;
     box-shadow: 0 -1px 0 0 rgba(226, 225, 225, 0.50);
+
+    &.is-iphonex {
+      bottom: $iphonex-safe-padding;
+    }
   }
 }
 
