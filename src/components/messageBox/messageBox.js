@@ -3,7 +3,7 @@ Component({
   data: {
     message: '',
     chat: [{
-      fromLocal: true,
+      fromRobot: true,
       message: '欢迎你加入机器之心人工智能信息服务平台',
       askBack: {
         items: [],
@@ -43,7 +43,7 @@ Component({
         const { CardType, node_label, Title, Items, path } = reply;
 
         chat.push({
-          fromLocal: true,
+          fromRobot: true,
           message: Title,
           askBack: {
             items: Items || [],
@@ -69,9 +69,7 @@ Component({
 
       const { chat, message } = this.data;
       chat.push({
-        id: Math.random() * 100000000,
-        fromLocal: false,
-        messageType: 1,
+        fromRobot: false,
         message,
       });
 
@@ -79,7 +77,6 @@ Component({
         chat,
         message: '',
         enableSendMessage: false,
-        inputFocus: true,
       }, () => {
         this.pageScrollToBottom();
       });
@@ -97,6 +94,15 @@ Component({
     },
     sendRecommendWord: function (event) {
       const keyword = event.target.dataset.value;
+      const { chat } = this.data;
+      chat.push({
+        fromRobot: false,
+        message: keyword,
+      });
+
+      this.setData({
+        chat,
+      });
       this.fetchData(keyword);
     },
     pageScrollToBottom: function() {
@@ -164,7 +170,7 @@ Component({
 // example:
 // {
 //    id: 4,
-//    fromLocal: true,
+//    fromRobot: true,
 //    messageType: 2,
 //    message: {
 //      logo_url: '',
@@ -175,7 +181,7 @@ Component({
 //    },
 //  }, {
 //    id: 5,
-//    fromLocal: true,
+//    fromRobot: true,
 //    messageType: 3,
 //    message: {
 //      morePath: '',
