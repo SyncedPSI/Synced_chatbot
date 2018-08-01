@@ -1,7 +1,7 @@
 <import src="./node.wxml"/>
 <import src="./search.wxml"/>
 
-<view class="message-box">
+<view class="message-box {{isIphoneX ? 'is-iphonex' : ''}}">
   <scroll-view class="message-box__body" id="js-scroll-view" scroll-y style="height: 100%; padding-top: {{scrollViewPaddingTop}}px;" scroll-top="{{scrollTop}}">
     <view id="js-content">
       <view class="message-box__item" wx:for="{{chat}}" wx:key="{{item.id}}">
@@ -27,7 +27,7 @@
   </scroll-view>
 </view>
 
-<view class="message-box__bottom">
+<view class="message-box__bottom {{isIphoneX ? 'is-iphonex' : ''}}">
   <scroll-view class="recommend-word__container" scroll-x style="width: 100%">
     <view class="recommend-word__item" wx:for="{{recommendWord}}" wx:key="recommend-word-{{index}}">
       <text class="recommend-word__inline" bindtap="sendRecommendWord" data-value="{{item}}">{{item}}</text>

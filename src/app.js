@@ -7,7 +7,8 @@ App({
 		// 调用API从本地缓存中获取数据
 		const logs = wx.getStorageSync('logs') || [];
 		logs.unshift(Date.now());
-		wx.setStorageSync('logs', logs);
+    wx.setStorageSync('logs', logs);
+    this.checkSystemInfo();
 	},
 	getUserInfo(cb) {
 		if (this.globalData.userInfo) {
@@ -26,8 +27,18 @@ App({
 				},
 			});
 		}
-	},
+  },
+  checkSystemInfo: function() {
+    wx.getSystemInfo({
+      success: (res) => {
+        if (res.model.match('iPhone X') !== null) {
+          this.globalData.isIphoneX = true;
+        }
+      }
+    })
+  },
 	globalData: {
-		userInfo: null,
+    userInfo: null,
+    isIphoneX: false,
 	},
 });

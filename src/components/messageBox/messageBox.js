@@ -1,5 +1,4 @@
 import { request } from "utils/util";
-
 Component({
   data: {
     message: '',
@@ -13,6 +12,7 @@ Component({
     scrollViewPaddingTop: 0,
     recommendWord: ['语音助手可以做什么', '它有哪些应用案例', '同类公司', '尝试发送推荐'],
     enableSendMessage: false,
+    isIphoneX: getApp().globalData.isIphoneX
   },
   ready: function() {
     this.enableChangePadding = true;
