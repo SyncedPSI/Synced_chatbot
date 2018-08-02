@@ -25,15 +25,8 @@ Component({
   },
   methods: {
     fetchData: function (keyword) {
-      request('https://tgenieapi-beta.dui.ai/dialog', {
-        query: {
-          resources: ['914001237', '914001354'],
-          text: keyword,
-          type: 'text'
-        },
-        context: {
-          session: 'dadwadasdawdad'
-        },
+      request('https://www.jiqizhixin.com/api/v1/chatbot/dialog', {
+        keyword,
       }, 'POST').then(res => {
         console.log(res.data);
         const { reply, askBack, recommend } = res.data.result;
