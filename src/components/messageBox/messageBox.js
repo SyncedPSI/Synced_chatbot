@@ -147,7 +147,7 @@ Component({
       const { scrollViewPaddingTop } = this.data;
       let newValue = -1;
       if ((this.scrollViewHeight - this.keyboardHeight) > contentHeight) {
-        newValue = this.keyboardHeight;
+        newValue = this.keyboardHeight - 34;
       } else if (this.scrollViewHeight > contentHeight) {
         newValue = this.scrollViewHeight - contentHeight;
       } else if (scrollViewPaddingTop > 0) {
